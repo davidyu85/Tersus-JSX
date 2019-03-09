@@ -1,10 +1,14 @@
 {
   "name": "tersus-jsx.macro",
   "description": "A babel macro created for making cleaner JSX via defining Tersus props, which transforms it into JSX expressions.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "dist/tersus-jsx.macro.js",
   "license": "MIT",
   "files": ["dist"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/davidyu85/Tersus-JSX.git"
+  },
   "keywords": [
     "webpack",
     "babel",
