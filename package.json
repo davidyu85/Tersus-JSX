@@ -1,0 +1,35 @@
+{
+  "name": "tersus-jsx.macro",
+  "description": "A babel macro created for making cleaner JSX via defining Tersus props, which transforms it into JSX expressions.",
+  "version": "0.1.0",
+  "main": "dist/tersus-jsx.macro.js",
+  "license": "MIT",
+  "files": ["dist"],
+  "keywords": [
+    "webpack",
+    "babel",
+    "babel-macros",
+    "babel-plugin-macros",
+    "tersus",
+    "tersus-jsx",
+    "tersus-jsx.macro",
+    "jsx",
+    "react"
+  ],
+  "scripts": {
+    "test": "jest --coverage",
+    "ci": "npm run test -- --ci && npm run build",
+    "prepare": "npm run build",
+    "build": "microbundle -i src/tersus-jsx.macro.js -o dist"
+  },
+  "dependencies": {
+    "babel-plugin-macros": "^2.2.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-plugin-tester": "^5.0.0",
+    "babel-preset-env": "^1.6.1",
+    "jest": "^22.3.0",
+    "microbundle": "^0.4.3"
+  }
+}
