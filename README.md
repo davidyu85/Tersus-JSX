@@ -130,6 +130,7 @@ class App extends Component {
 ## Known issues
 - Having an JSX element with both tj-if and tj-for might produce interesting side effects. For the time being, it is recommended placing the two props in seperate elements.
 - A JSX fragment is wrapped around any transpiled elements. This is because without it, it will generate a meaningless error - container is falsy.
+- (MAJOR)Tersus conveniently removes all attributes without checking. A silly mistake from me. Will fix this asap!
 
 ## License
 
