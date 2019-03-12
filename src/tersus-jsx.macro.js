@@ -74,14 +74,13 @@ const traverseModifier = (rootPath, t) => {
   rootPath.parentPath.traverse({
     JSXAttribute(path) {
       let attr = path.node.name.name;
-      const c = cloneAndRemoveAttr(path, t);
       switch(attr) {
         case `${PREFIX}if`:
-          _if(c, t);
+          _if(cloneAndRemoveAttr(path, t), t);
           break;
 
         case `${PREFIX}for`:
-          _for(c, t);
+          _for(cloneAndRemoveAttr(path, t), t);
           break;
 
         default:
