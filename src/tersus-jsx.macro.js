@@ -14,52 +14,57 @@ const cloneAndRemoveAttr = (path, t) => {
   return ({ parentPath, expression, node })
 };
 
+const replaceWithJSXExpression = (c, t, children) => {
+  if (
+    c.parentPath.container === null
+    || c.node.type === 'JSXExpressionContainer'
+  ) return;
+  c.parentPath.replaceWith(
+    t.JSXExpressionContainer(children)
+  );
+}
+
+const wrapWithFragment = (t, node) => (
+  t.JSXFragment(
+    t.JSXOpeningFragment(),
+    t.JSXClosingFragment(),
+    [node]
+  )
+);
+
 // Constructs a if statement.
 const _if = (c, t) => {
-  c.parentPath.replaceWith(
-    t.JSXFragment(
-    t.JSXOpeningFragment(),
-      t.JSXClosingFragment(),
-      [
-        t.JSXExpressionContainer(
-          t.LogicalExpression(
-            '&&',
-            c.expression,
-            c.node
-          )
-        )
-      ]
+  replaceWithJSXExpression(c, t,
+    t.LogicalExpression(
+      '&&',
+      c.expression,
+      wrapWithFragment(t, c.node)
     )
-  );
+  )
 };
 
 // Constructs a Javascript loop using map.
 const _for = (c, t) => {
-  c.parentPath.replaceWith(
-    t.JSXFragment(
-      t.JSXOpeningFragment(),
-      t.JSXClosingFragment(),
-      [
-        t.JSXExpressionContainer(
-          t.CallExpression(
-            t.MemberExpression(
-              c.expression,
-              t.Identifier('map')
-            ),
-            [t.ArrowFunctionExpression(
-              [t.Identifier('value'), t.Identifier('index')],
-              c.node
-            )]
-          )
-        )
-      ]
+  replaceWithJSXExpression(c, t,
+    t.CallExpression(
+      t.MemberExpression(
+        c.expression,
+        t.Identifier('map')
+      ),
+      [t.ArrowFunctionExpression(
+        [
+          t.Identifier('value'),
+          t.Identifier('index')
+        ],
+        wrapWithFragment(t, c.node)
+      )]
     )
-  );
+  )
 
   c.parentPath.traverse({ // String literals with var_identifier are changed into variables.
-    StringLiteral(path) {
+  	StringLiteral(path) {
       if (path.node.value.match(VAR_IDENTIFY)) {
-        path.replaceWith(
+      	path.replaceWith(
           t.Identifier(
             path.node.value.replace(VAR_IDENTIFY, '')
           )

@@ -1,11 +1,12 @@
 # Tersus JSX Macro
 
-Missing the good old days of AngularJS that you can do loops in ng-repeat, as oppose to ugly mix of elements and expressions in JSX while using React?
+Missing the good old days of AngularJS that you can do loops simply with "ng-repeat", as oppose to ugly mix of elements and expressions in JSX while using React?
 
-This babel macro aims to make your JSX cleaner via defining Tersus props, which transforms it into JSX expressions for you. The current version supports:
+This Babel-Macro provides useful props for making a better and neater JSX. These props are transformed into appropriate JSX expressions for you by Babel-Macro, so that people can just define props and forget about formulating unintuitive JSX expression, like what we used to do in AngularJS. The current version supports:
 - if statement (tj-if) simulating ng-if
 - map function (tj-for) simulating ng-repeat/ng-for
 
+This macro is made so that people can just define props and forget about the complicated JSX expression.
 
 ## tj-if Usage (similar to ng-if)
 Simply attach an expression to tj-if prop.
@@ -25,7 +26,7 @@ class App extends Component {
 }
 ```
 
-Will be converted to
+is equivalent to
 
 ```js
 class App extends Component {
@@ -33,7 +34,7 @@ class App extends Component {
   render() {
     return (
       <>
-       <>{a === 0 && <div>Make neater JSX</div>}</>
+        {a === 0 && <><div>Make neater JSX</div></>}
       </>
     )
   }
@@ -65,7 +66,7 @@ class App extends Component {
 }
 ```
 
-Will be converted to
+is equivalent to
 
 ```js
 class App extends Component {
@@ -73,16 +74,16 @@ class App extends Component {
   render() {
     return (
       <>
-        <>{['a', 'b', 'c', 'd', 'e'].map((value, index) => <div>
+        {['a', 'b', 'c', 'd', 'e'].map((value, index) => <><div>
           <b>{value}</b>
           <i>{index}</i>
-        </div>)}</>
+        </div></>)}
       </>
     )
   }
 }
 ```
-## Advance mix use case
+## Advance mix use-case
 ```js
 import tersus from 'tersus-jsx.macro';
 
@@ -104,7 +105,7 @@ class App extends Component {
 }
 ```
 
-Will be converted to
+is equivalent to
 
 ```js
 class App extends Component {
@@ -112,22 +113,18 @@ class App extends Component {
   render() {
     return (
       <>
-        <>{a === 0 && <div>
-          <>{['a', 'b', 'c', 'd', 'e'].map((value, index) => <div>
-            <>{value === c && <div>
+        {a === 0 && <><div>
+          {['a', 'b', 'c', 'd', 'e'].map((value, index) => <><div>
+            {value === c && <><div>
               {value}
-            </div>}</>
-          </div>)}</>
-        </div>}</> 
+            </div></>}
+          </div></>)}
+        </div></>} 
       </>
     )
   }
 }
 ```
-
-## Known issues
-- Having an JSX element with both tj-if and tj-for might produce interesting side effects. For the time being, it is recommended placing the two props in seperate elements.
-- A JSX fragment is wrapped around any transpiled elements. This is because without it, it will generate a meaningless error - container is falsy.
 
 ## License
 

@@ -1,7 +1,7 @@
 {
   "name": "tersus-jsx.macro",
-  "description": "A babel macro created for making cleaner JSX via defining Tersus props, which transforms it into JSX expressions.",
-  "version": "0.1.2",
+  "description": "This Babel-Macro provides useful props for making a better and neater JSX. These props are transformed into appropriate JSX expressions for you by Babel-Macro, so that people can just define props and forget about formulating unintuitive JSX expression, like what we used to do in AngularJS.",
+  "version": "0.1.3",
   "main": "dist/tersus-jsx.macro.js",
   "license": "MIT",
   "files": ["dist"],
